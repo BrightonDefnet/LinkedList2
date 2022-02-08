@@ -17,9 +17,9 @@ int main() {
         if (result == "add") { //add a new student
             head = add(head);
             print(head, head);
+
         } else if (result == "quit") { //quit the program
             running = false;
-            break;
 
         } else { //error handler
             cout << "not a command" << endl;
@@ -52,10 +52,18 @@ Node* add(Node* head) {
         return head;
     } else {
         while (current->getNext() != NULL) {
-            current = current->getNext();
+            if (stu.getId() > current->getStudent()->getId()) {
+                current = current->getNext();
+            } else { 
+                Node* node = new Node(&stu);
+                node->setNext(current->getNext());
+                current->setNext(node);
+                while (current->getNext() != NULL) {
+                    current = current->getNext();
+                }
+                return head;
+            }
         }
-        Node* node = new Node(&stu);
-        current->setNext(node);
         return head;
     }
 }
